@@ -3,7 +3,7 @@ using EComPayApp.Domain.Enums;
 
 namespace EComPayApp.Domain.Entities
 {
-    public class Order : BaseEntity
+    public class Order : BaseEntity<Guid>
     {
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }

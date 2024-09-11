@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.PaymentDtos
 {
-    public class GetPaymentDto:IDto
+    public class PaymentDto:IDto<Guid>
     {
+        public Guid Id { get; set; }
         public Guid OrderId { get; set; }
         public float Amount { get; set; }
         public string PaymentMethod { get; set; }
         public bool Status { get; set; }
-        public GetOrderDto Order { get; set; }
+        public OrderDto Order { get; set; }
     }
 }

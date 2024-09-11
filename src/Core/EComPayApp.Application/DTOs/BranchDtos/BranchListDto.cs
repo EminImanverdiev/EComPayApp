@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.BranchDtos
 {
-    public class BranchListDto:IDto
+    public class BranchListDto:IDto<Guid>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

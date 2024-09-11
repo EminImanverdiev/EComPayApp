@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.CategoryDtos
 {
-    public class GetCategoryDto:IDto
+    public class CategoryDto:IDto<Guid>
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
-        public ICollection<GetProductDto> Products { get; set; } = new List<GetProductDto>();
+        public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Domain.Entities
 {
-    public class About:BaseEntity
+    public class About:BaseEntity<Guid>
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; }  // Başlıq (məsələn, "Haqqımızda")
-        public string Description { get; set; }  // Şirkət haqqında mətn
-        public string Vision { get; set; }  // Şirkətin baxışı
-        public string Mission { get; set; }  // Şirkətin missiyası
+        public string Title { get; set; } 
+        public string Description { get; set; }  
+        public string Vision { get; set; }  
+        public string Mission { get; set; } 
     }
 }

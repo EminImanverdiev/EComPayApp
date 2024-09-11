@@ -2,8 +2,9 @@
 using EComPayApp.Application.Interfaces.DTO;
 namespace EComPayApp.Application.DTOs.AddressDtos
 {
-    public class AddreessListDto:IDto
+    public class AddreessListDto:IDto<Guid>
     {
+        public Guid Id { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }

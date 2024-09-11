@@ -5,7 +5,7 @@ using EComPayApp.Application.Interfaces.DTO;
 
 namespace EComPayApp.Application.DTOs.ProductDtos
 {
-    public class GetProductDto:IDto
+    public class ProductDto:IDto<Guid>
     {
         public Guid Id { get; set; }
         public Guid CategoryId { get; set; }
@@ -14,9 +14,9 @@ namespace EComPayApp.Application.DTOs.ProductDtos
         public string Description { get; set; }
         public int Stock { get; set; }
         public float Price { get; set; }
-        public ICollection<GetOrderItemDto> OrderItems { get; set; } 
-        public GetCategoryDto Category { get; set; } 
+        public ICollection<OrderItemDto> OrderItems { get; set; } 
+        public CategoryDto Category { get; set; } 
         public Guid BranchId { get; set; }
-        public GetBranchDto Branch { get; set; }
+        public BranchDto Branch { get; set; }
     }
 }

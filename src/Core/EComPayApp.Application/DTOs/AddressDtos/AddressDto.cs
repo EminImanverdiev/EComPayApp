@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.AddressDtos
 {
-    public class GetAddressDto:IDto
+    public class AddressDto:IDto
     {
+        public Guid Id { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }

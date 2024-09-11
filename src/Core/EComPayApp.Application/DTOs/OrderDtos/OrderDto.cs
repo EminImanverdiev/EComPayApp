@@ -12,16 +12,18 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.OrderDtos
 {
-    public class GetOrderDto:IDto
+    public class OrderDto:IDto<Guid>
     {
+        public Guid Id { get; set; }
+
         public Guid CustomerId { get; set; }
-        public GetCustomerDto Customer { get; set; } 
+        public CustomerDto Customer { get; set; } 
         public string Description { get; set; }
         public string Address { get; set; }
         public decimal? Discount { get; set; }
         public OrderStatus Status { get; set; }
-        public ICollection<GetOrderItemDto> OrderItems { get; set; } = new List<GetOrderItemDto>(); 
-        public ICollection<GetPaymentDto> Payments { get; set; } = new List<GetPaymentDto>(); 
+        public ICollection<OrderItemDto> OrderItems { get; set; } = new List<OrderItemDto>(); 
+        public ICollection<PaymentDto> Payments { get; set; } = new List<PaymentDto>(); 
         public float TotalPrice { get; set; } 
     }
 }

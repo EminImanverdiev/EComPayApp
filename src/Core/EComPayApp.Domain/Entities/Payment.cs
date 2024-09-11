@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Domain.Entities
 {
-    public class Payment:BaseEntity
+    public class Payment:BaseEntity<Guid>
     {
         public Guid OrderId { get; set; }
         public float Amount { get; set; }

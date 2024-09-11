@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Domain.Entities
 {
-    public class Branch : BaseEntity
+    public class Branch : BaseEntity<Guid>
     {
         public Guid AddressId { get; set; }
         public Address Address { get; set; }

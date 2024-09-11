@@ -2,9 +2,9 @@
 
 namespace EComPayApp.Domain.Entities.Comman
 {
-    public class BaseEntity
+    public class BaseEntity<T>
     {
-        public Guid Id { get; set; }
+        public T Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
     }

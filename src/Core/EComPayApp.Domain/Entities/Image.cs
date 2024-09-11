@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Domain.Entities
 {
-    public class Image:BaseEntity
+    public class Image:BaseEntity<Guid>
     {
         public Guid ProductId { get; set; }
         public string ImageUrl { get; set; }

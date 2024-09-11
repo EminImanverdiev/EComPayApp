@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.CustomerDtos
 {
-    public class GetCustomerDto:IDto
+    public class CustomerDto:IDto<Guid>
     {
+        public Guid Id { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public ICollection<GetOrderDto> Orders { get; set; } = new List<GetOrderDto>();
+        public ICollection<OrderDto> Orders { get; set; } = new List<OrderDto>();
     }
 }

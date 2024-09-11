@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Domain.Entities
 {
-    public class Category : BaseEntity
+    public class Category : BaseEntity<Guid>
     {
         public string Name { get; set; }
         public ICollection<Product> Products { get; set; }

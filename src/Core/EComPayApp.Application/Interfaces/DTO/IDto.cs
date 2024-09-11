@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EComPayApp.Application.Interfaces.DTO
+﻿namespace EComPayApp.Application.Interfaces.DTO
 {
-    internal interface IDto
+    public interface IDto<T>
     {
+        public T Id { get; set; }
     }
 }

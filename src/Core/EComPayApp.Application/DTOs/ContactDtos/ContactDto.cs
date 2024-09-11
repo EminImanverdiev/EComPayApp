@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.ContactDtos
 {
-    public class GetContactDto:IDto
+    public class ContactDto:IDto<Guid>
     {
         public Guid Id { get; set; }
         public string Address { get; set; }  

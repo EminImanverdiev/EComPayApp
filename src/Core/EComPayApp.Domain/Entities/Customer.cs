@@ -2,7 +2,7 @@
 
 namespace EComPayApp.Domain.Entities
 {
-    public class Customer : BaseEntity
+    public class Customer : BaseEntity<Guid>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

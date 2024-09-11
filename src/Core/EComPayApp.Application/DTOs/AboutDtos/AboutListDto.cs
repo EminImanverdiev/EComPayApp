@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.AboutDtos
 {
-    public class AboutListDto : IDto
+    public class AboutListDto : IDto<Guid>
     {
-        public Guid Id { get; set; }
+        public Guid Id { get ; set ; }
         public string Title { get; set; }
         public string Description { get; set; }
     }

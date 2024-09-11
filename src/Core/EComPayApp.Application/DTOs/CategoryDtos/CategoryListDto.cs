@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.DTOs.CategoryDtos
 {
-    public  class CategoryListDto:IDto
+    public  class CategoryListDto:IDto<Guid>
     {
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
     }
 }
