@@ -15,7 +15,6 @@ namespace EComPayApp.Domain.Entities
         public Category Category { get; set; }
         public Branch Branch { get; set; }
         public ICollection<Image> Images { get; set; } = new List<Image>();
-        public ICollection<OrderItem> OrderItems { get; set; }
 
     }
 

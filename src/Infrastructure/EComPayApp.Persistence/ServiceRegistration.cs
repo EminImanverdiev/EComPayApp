@@ -15,7 +15,7 @@ namespace EComPayApp.Persistence
         {
             services.AddDbContext<EComPayAppDbContext>(options =>
             {
-                options.UseSqlServer(Conf);
+                options.UseSqlServer(Configuration.ConnectionString);
             });
         }
     }
