@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EComPayApp.Application.Interfaces.Repositories.Customers;
+using EComPayApp.Application.Interfaces.Repositories.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.Interfaces.UoW
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork:IDisposable
     {
+        IProductRepository Products { get; }
+        ICustomerRepository Customers { get; }
+        Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

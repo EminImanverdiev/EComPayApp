@@ -1,4 +1,6 @@
-﻿using EComPayApp.Persistence.Contexts;
+﻿using EComPayApp.Application.Interfaces.UoW;
+using EComPayApp.Persistence.Contexts;
+using EComPayApp.Persistence.UoW;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,6 +19,7 @@ namespace EComPayApp.Persistence
             {
                 options.UseSqlServer(Configuration.ConnectionString);
             });
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }
