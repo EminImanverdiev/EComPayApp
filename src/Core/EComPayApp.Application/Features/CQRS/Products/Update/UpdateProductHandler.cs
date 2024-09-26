@@ -1,53 +1,47 @@
-﻿using AutoMapper;
-using EComPayApp.Application.DTOs.ProductDtos;
-using EComPayApp.Application.Features.CQRS.Queries.Products.GetProduct;
+﻿// Features/Commands/Products/Update/UpdateProductCommandHandler.cs
+using AutoMapper;
+using EComPayApp.Application.Features.CQRS.Commands.Products.UpdateProduct;
 using EComPayApp.Application.Interfaces.Repositories;
-using EComPayApp.Application.Interfaces.Repositories.IUnitOfWork;
+using EComPayApp.Application.Interfaces.UoW;
 using EComPayApp.Domain.Entities;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace EComPayApp.Application.Features.CQRS.Commands.Products.UpdateProduct
+namespace EComPayApp.Application.Features.CQRS.Commands.Products.Update
 {
-    public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, UpdateProductResponse>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, UpdateProductResponse>
     {
-        private readonly IWriteRepository<Product> _repository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateProductHandler(IWriteRepository<Product> repository, IMapper mapper)
+        public UpdateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
         public async Task<UpdateProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _repository.GetByIdAsync(request.Id);
+            var product = await _unitOfWork.Products.GetByIdAsync(request.Id);
 
             if (product == null)
             {
                 return new UpdateProductResponse
                 {
                     IsSuccess = false,
-                    Message = "Product not found"
+                    Message = "Product not found."
                 };
             }
-
             _mapper.Map(request, product);
-
-            var result = _repository.Update(product);
-            await _repository.SaveAsync();
+            var changes = await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new UpdateProductResponse
             {
-                IsSuccess = true,
-                Message = "Product updated successfully",
-                Product = _mapper.Map<GetProductDto>(product)
+                IsSuccess = changes > 0,
+                Message = changes > 0 ? "Product updated successfully." : "Product update failed.",
+                UpdatedDate = DateTime.UtcNow
             };
         }
     }
-    }
+}

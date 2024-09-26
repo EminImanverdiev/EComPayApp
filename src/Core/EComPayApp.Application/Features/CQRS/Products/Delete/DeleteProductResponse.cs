@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EComPayApp.Application.Features.CQRS.Comman;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.Features.CQRS.Commands.Products.DeleteProduct
 {
-    public class DeleteProductResponse
+    public class DeleteProductResponse:BaseResponse<bool,string>
     {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
     }
 }

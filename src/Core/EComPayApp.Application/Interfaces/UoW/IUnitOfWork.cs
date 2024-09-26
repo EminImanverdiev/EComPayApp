@@ -12,6 +12,6 @@ namespace EComPayApp.Application.Interfaces.UoW
     {
         IProductRepository Products { get; }
         ICustomerRepository Customers { get; }
-        Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

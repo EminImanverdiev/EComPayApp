@@ -1,4 +1,5 @@
 ﻿using EComPayApp.Application.DTOs.ProductDtos;
+using EComPayApp.Application.Features.CQRS.Comman;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.Features.CQRS.Commands.Products.UpdateProduct
 {
-    public class UpdateProductResponse
+    public class UpdateProductResponse:BaseResponse<bool,string>
     {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
-        public GetProductDto Product { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }

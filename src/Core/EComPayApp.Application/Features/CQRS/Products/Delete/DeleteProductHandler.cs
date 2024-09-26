@@ -1,28 +1,26 @@
-﻿using EComPayApp.Application.Features.CQRS.Queries.Products.GetProduct;
+﻿using EComPayApp.Application.Features.CQRS.Commands.Products.DeleteProduct;
 using EComPayApp.Application.Interfaces.Repositories;
-using EComPayApp.Application.Interfaces.Repositories.IUnitOfWork;
+using EComPayApp.Application.Interfaces.UoW;
 using EComPayApp.Domain.Entities;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace EComPayApp.Application.Features.CQRS.Commands.Products.DeleteProduct
+namespace EComPayApp.Application.Features.CQRS.Commands.Products.Delete
 {
-    public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, DeleteProductResponse>
+    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, DeleteProductResponse>
     {
-        private readonly IWriteRepository<Product> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteProductHandler(IWriteRepository<Product> repository)
+        public DeleteProductCommandHandler(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<DeleteProductResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _repository.GetByIdAsync(request.Id);
+            var product = await _unitOfWork.Products.GetByIdAsync(request.Id);
 
             if (product == null)
             {
@@ -33,13 +31,13 @@ namespace EComPayApp.Application.Features.CQRS.Commands.Products.DeleteProduct
                 };
             }
 
-            var result = _repository.Remove(product);
-            await _repository.SaveAsync();
+            _unitOfWork.Products.Remove(product);
+            var changes = await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new DeleteProductResponse
             {
-                IsSuccess = result,
-                Message = result ? "Product deleted successfully" : "Delete failed"
+                IsSuccess = changes > 0,
+                Message = changes > 0 ? "Product deleted successfully" : "Product deletion failed"
             };
         }
     }

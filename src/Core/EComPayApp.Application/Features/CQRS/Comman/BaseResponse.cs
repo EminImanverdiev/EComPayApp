@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace EComPayApp.Application.Features.CQRS.Comman
 {
-    internal class BaseResponse
+    public class BaseResponse<TSuccess,TMessage>
     {
+        public TSuccess IsSuccess { get; set; }
+        public TMessage Message { get; set; }
     }
 }

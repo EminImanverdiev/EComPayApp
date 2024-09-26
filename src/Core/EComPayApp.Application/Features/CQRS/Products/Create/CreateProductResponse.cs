@@ -1,9 +1,9 @@
-﻿namespace EComPayApp.Application.Features.CQRS.Commands.Products.Create
+﻿using EComPayApp.Application.Features.CQRS.Comman;
+
+namespace EComPayApp.Application.Features.CQRS.Commands.Products.Create
 {
-    public class CreateProductResponse
+    public class CreateProductResponse:BaseResponse<bool,string>
     {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

@@ -1,45 +1,34 @@
-﻿using EComPayApp.Application.Interfaces;
+﻿using AutoMapper;
 using EComPayApp.Application.Features.CQRS.Commands.Products.Create;
-using EComPayApp.Domain.Entities;
-using AutoMapper;
-using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using EComPayApp.Application.Features.CQRS.Commands.Products.CreateProduct;
 using EComPayApp.Application.Interfaces.UoW;
+using EComPayApp.Domain.Entities;
+using MediatR;
 
-namespace EComPayApp.Application.Features.CQRS.Commands.Products.Create
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductResponse>
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductResponse>
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+
+    public CreateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+    }
 
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public async Task<CreateProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    {
+        var product = _mapper.Map<Product>(request);
+        await _unitOfWork.Products.AddAsync(product);
+
+        var changes = await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var isSuccess = changes > 0; 
+        var response = new CreateProductResponse
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
-
-        public async Task<CreateProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
-        {
-            // Komandadan Product obyekti yaradılır
-            var product = _mapper.Map<Product>(request);
-
-            // Məhsulu əlavə edirik
-            await _unitOfWork.Products.AddAsync(product);
-
-            // Əməliyyatları tamamlayırıq
-            var isSuccess = await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            // Cavab obyektini yaradaraq məlumatları doldururuq
-            var response = _mapper.Map<CreateProductResponse>(product);
-            response.IsSuccess = isSuccess;
-            response.Message = isSuccess ? "Product created successfully" : "Product creation failed";
-            response.CreatedDate = DateTime.UtcNow;
-
-            return response;
-        }
+            IsSuccess = isSuccess,
+            Message = isSuccess ? "Product created successfully" : "Product creation failed",
+            CreatedDate = DateTime.UtcNow
+        };
+        return response;
     }
 }
