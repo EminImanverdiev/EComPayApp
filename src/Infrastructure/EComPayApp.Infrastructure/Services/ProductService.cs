@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using EComPayApp.Application.DTOs.ProductDtos;
+using EComPayApp.Application.Interfaces.Repositories.Products;
 using EComPayApp.Application.Interfaces.Services;
 using EComPayApp.Application.Interfaces.UoW;
+using EComPayApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EComPayApp.Infrastructure.Services
@@ -23,14 +24,14 @@ namespace EComPayApp.Infrastructure.Services
 
         public async Task<IQueryable<ProductListDto>> GetAllProductsAsync()
         {
-            var products = await _unitOfWork.Products.GetAll(); // GetAllAsync metodu IRepository-də olmalıdır.
+            var products = _unitOfWork.Products.GetAll(); 
             var productListDtos = _mapper.ProjectTo<ProductListDto>(products);
             return productListDtos;
         }
 
         public async Task<ProductDto> GetProductByIdAsync(Guid productId)
         {
-            var product = await _unitOfWork.Products.GetByIdAsync(productId);
+            var product = await _unitOfWork.Products.GetByIdAsync(productId); 
             return _mapper.Map<ProductDto>(product);
         }
 
@@ -48,7 +49,11 @@ namespace EComPayApp.Infrastructure.Services
 
         public async Task<bool> DeleteProductAsync(Guid productId)
         {
-            return await _unitOfWork.Products.Remove(productId);
+            var product = await _unitOfWork.Products.GetByIdAsync(productId);
+            if (product == null)
+                return false;
+
+            return _unitOfWork.Products.Remove(product); 
         }
     }
 }
